@@ -109,6 +109,6 @@ This project is licensed under the **MIT License**.
 ---
 
 ## 📬 Contact
-📧 Email: [harshlahane@example.com](mailto:harshwardhanlahane633@gmail.com)  
+📧 Email: [harshwardhanlahane633@gmail.com](mailto:harshwardhanlahane633@gmail.com)  
 🔗 GitHub: [HarshLahane78](https://github.com/HarshLahane78)
 
