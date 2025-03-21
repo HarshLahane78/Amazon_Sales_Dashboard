@@ -1,9 +1,9 @@
-name: Deploy Amazon Sales Dashboard
+name: Deploy static content to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
-  workflow_dispatch:
+    branches: ["main"]  # Runs on push to the main branch
+  workflow_dispatch:  # Allows manual trigger
 
 permissions:
   contents: read
@@ -20,28 +20,28 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Verify Project Structure
-        run: |
-          echo "Checking if required directories exist..."
-          ls -l
-          [ -d static ] && echo "✔ static exists" || echo "❌ static missing"
-          [ -d templates ] && echo "✔ templates exists" || echo "❌ templates missing"
-          [ -d reports ] && echo "✔ reports exists" || echo "❌ reports missing"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Move files to the docs directory (GitHub Pages requirement)
+        run: |
+          mkdir -p docs
+          cp -r templates/index.html docs/  # Move index.html to docs folder
+          cp -r static docs/  # Move static assets if needed
+
       - name: Upload Project Files for Deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./  # Upload everything in the repo
+          path: docs/  # Upload docs folder for GitHub Pages
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
 
 
