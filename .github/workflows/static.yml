@@ -1,4 +1,3 @@
-# GitHub Actions workflow for deploying the Amazon Sales Dashboard to GitHub Pages
 name: Deploy Amazon Sales Dashboard
 
 on:
@@ -25,15 +24,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Verify Project Structure
+        run: |
+          echo "Checking if required directories exist..."
+          ls -l
+          [ -d static ] && echo "✔ static exists" || echo "❌ static missing"
+          [ -d templates ] && echo "✔ templates exists" || echo "❌ templates missing"
+          [ -d reports ] && echo "✔ reports exists" || echo "❌ reports missing"
+
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Project Files for Deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            static
-            templates
+          path: ./  # Upload everything in the repo
 
       - name: Deploy to GitHub Pages
         id: deployment
